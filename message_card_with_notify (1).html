@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Ek Pyaara Sa Message ✨</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #f6f3ff;
+    --lilac: #e3d9fb;
+    --violet: #7c5cff;
+    --deep: #241a4d;
+    --gold: #ffb86b;
+    --mint: #6be3c4;
+    --soft-shadow: rgba(124, 92, 255, 0.25);
+  }
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body{
+    margin:0; padding:0; height:100%;
+    background: linear-gradient(160deg, #1b1240 0%, #3a2a7a 45%, #6a4fd6 100%);
+    font-family: 'Quicksand', sans-serif;
+    color: var(--deep);
+    overflow-x:hidden;
+  }
+  .screen{
+    min-height:100dvh;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 24px 16px;
+    position:relative;
+  }
+  .hidden{ display:none !important; }
+
+  /* ---------- Twinkling stars background ---------- */
+  #starField{
+    position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+  }
+  .star{
+    position:absolute;
+    background:white;
+    border-radius:50%;
+    animation: twinkle ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%, 100%{ opacity:0.15; transform:scale(0.8); }
+    50%{ opacity:1; transform:scale(1.3); }
+  }
+
+  /* ---------- Floating cute emojis ---------- */
+  .bg-float{
+    position:fixed;
+    top:-40px;
+    font-size: 20px;
+    opacity:0.75;
+    animation: floatDown linear infinite;
+    pointer-events:none;
+    z-index:1;
+  }
+  @keyframes floatDown{
+    0%{ transform: translateY(-40px) rotate(0deg) scale(0.8); opacity:0; }
+    10%{ opacity:0.85; }
+    50%{ transform: translateY(50vh) rotate(180deg) scale(1.1); }
+    100%{ transform: translateY(110vh) rotate(360deg) scale(0.9); opacity:0; }
+  }
+
+  /* ---------- Fullscreen toggle ---------- */
+  #fsBtn{
+    position:fixed;
+    top: max(14px, env(safe-area-inset-top));
+    right:14px;
+    z-index:30;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.4);
+    color:white;
+    width:42px; height:42px;
+    border-radius:50%;
+    font-size:1.1rem;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+
+  /* ---------- Sound toggle ---------- */
+  #soundBtn{
+    position:fixed;
+    top: max(14px, env(safe-area-inset-top));
+    left:14px;
+    z-index:30;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.4);
+    color:white;
+    width:42px; height:42px;
+    border-radius:50%;
+    font-size:1.1rem;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+
+  /* ---------- Card container ---------- */
+  .card{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width: 420px;
+    background: var(--paper);
+    border-radius: 28px;
+    padding: 32px 26px 34px;
+    box-shadow: 0 25px 60px var(--soft-shadow), 0 2px 10px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.6);
+    animation: cardPop .55s cubic-bezier(.2,.9,.3,1.2);
+  }
+  @keyframes cardPop{
+    0%{ transform: scale(0.85) translateY(20px); opacity:0; }
+    100%{ transform: scale(1) translateY(0); opacity:1; }
+  }
+
+  h1.title{
+    font-family:'Caveat', cursive;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--violet), #a855f7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align:center;
+    margin: 0 0 6px;
+  }
+  p.subtitle{
+    text-align:center;
+    font-size: 0.85rem;
+    color:#8b7fb0;
+    margin:0 0 24px;
+  }
+
+  label{
+    display:block;
+    font-weight:600;
+    font-size:0.9rem;
+    margin: 16px 0 6px;
+    color: var(--deep);
+  }
+  input[type="text"], textarea{
+    width:100%;
+    border: 2px solid var(--lilac);
+    background:#fdfcff;
+    border-radius:14px;
+    padding: 12px 14px;
+    font-family:'Quicksand', sans-serif;
+    font-size: 1rem;
+    color: var(--deep);
+    resize:none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  input[type="text"]:focus, textarea:focus{
+    outline:none;
+    border-color: var(--violet);
+    box-shadow: 0 0 0 4px rgba(124,92,255,0.15);
+  }
+  textarea{ min-height: 90px; }
+
+  .option-row{ display:flex; gap:8px; margin-top:6px; }
+  .option-row input{ flex:1; }
+
+  button{
+    font-family:'Quicksand', sans-serif;
+    font-weight:700;
+    border:none;
+    cursor:pointer;
+    border-radius: 14px;
+    transition: transform .15s ease, box-shadow .15s ease, background .2s;
+  }
+  button:active{ transform: scale(0.94); }
+
+  .btn-small{
+    background: var(--gold);
+    color:white;
+    padding: 0 18px;
+    font-size:0.95rem;
+  }
+
+  .options-list{ margin-top:10px; display:flex; flex-direction:column; gap:8px; }
+  .option-chip{
+    display:flex; align-items:center; justify-content:space-between;
+    background: #f1ecff;
+    border: 1px solid var(--lilac);
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size:0.92rem;
+    animation: chipIn .3s ease;
+  }
+  @keyframes chipIn{ 0%{ opacity:0; transform: translateX(-8px);} 100%{opacity:1; transform:translateX(0);} }
+  .option-chip button{ background:none; color: var(--violet); font-size:1.1rem; padding:0 4px; line-height:1; }
+
+  .btn-main{
+    width:100%;
+    margin-top:26px;
+    background: linear-gradient(135deg, var(--violet), #a855f7);
+    color:white;
+    font-size:1.05rem;
+    padding: 15px;
+    box-shadow: 0 10px 24px rgba(124,92,255,0.45);
+    position:relative;
+    overflow:hidden;
+  }
+  .btn-main:hover{ box-shadow: 0 14px 30px rgba(124,92,255,0.6); }
+
+  .hint{ text-align:center; font-size:0.75rem; color:#a89cc9; margin-top:10px; }
+
+  /* ---------- Letter / card screen ---------- */
+  .envelope-icon{
+    text-align:center;
+    font-size:2.8rem;
+    margin-bottom:6px;
+    animation: bounceIcon 2.4s ease-in-out infinite;
+  }
+  @keyframes bounceIcon{
+    0%,100%{ transform: translateY(0) rotate(-4deg); }
+    50%{ transform: translateY(-8px) rotate(4deg); }
+  }
+  h2.her-name{
+    font-family:'Caveat', cursive;
+    font-size: 2.7rem;
+    text-align:center;
+    background: linear-gradient(135deg, var(--violet), #a855f7);
+    -webkit-background-clip: text; background-clip:text; color:transparent;
+    margin: 0 0 14px;
+  }
+  .letter-box{
+    min-height: 120px;
+    background: #fdfcff;
+    border: 2px dashed var(--lilac);
+    border-radius: 16px;
+    padding: 18px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--deep);
+    transition: min-height .3s ease;
+  }
+  .cursor{
+    display:inline-block;
+    width: 2px;
+    height: 1.1em;
+    vertical-align: text-bottom;
+    background: var(--violet);
+    margin-left:2px;
+    animation: blink 0.8s step-start infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .word-fade{
+    display:inline-block;
+    opacity:0;
+    transform: translateY(6px) scale(0.9);
+    filter: blur(2px);
+    transition: opacity .35s ease, transform .35s cubic-bezier(.2,.8,.3,1.3), filter .35s ease;
+  }
+  .word-fade.visible{ opacity:1; transform: translateY(0) scale(1); filter: blur(0); }
+
+  .prompt-line{
+    text-align:center;
+    font-weight:700;
+    color: var(--deep);
+    margin: 22px 0 12px;
+    opacity:0;
+    transition: opacity .6s ease;
+  }
+  .prompt-line.show{ opacity:1; }
+
+  .options-wrap{ display:flex; flex-direction:column; gap:12px; }
+  .choice-btn{
+    background:white;
+    border: 2px solid var(--violet);
+    color: var(--violet);
+    padding: 14px;
+    font-size:1rem;
+  }
+  .choice-btn:hover{ background: var(--violet); color:white; }
+  .choice-btn:active{ animation: wiggle .3s ease; }
+  @keyframes wiggle{ 0%,100%{transform:scale(0.94) rotate(0);} 50%{transform:scale(0.94) rotate(-2deg);} }
+
+  .edit-link{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    font-size:0.8rem;
+    color:#b3a6d9;
+    background:none;
+    text-decoration:underline;
+  }
+
+  /* ---------- Share row (creator only) ---------- */
+  .share-row{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:24px;
+    opacity:0;
+    transform: translateY(8px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .share-row.show{ opacity:1; transform:translateY(0); }
+  .share-row p{
+    text-align:center;
+    font-size:0.8rem;
+    color:#8b7fb0;
+    margin:0 0 2px;
+  }
+  .btn-link{
+    background: linear-gradient(135deg, var(--mint), #4fd1a5);
+    color: white;
+    padding: 13px;
+    font-size:0.95rem;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .btn-share{
+    background: white;
+    border: 2px solid var(--violet);
+    color: var(--violet);
+    padding: 12px;
+    font-size:0.92rem;
+  }
+
+  /* ---------- Toast ---------- */
+  #toast{
+    position:fixed;
+    left:50%;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    transform: translateX(-50%) translateY(20px);
+    background: var(--deep);
+    color:white;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size:0.88rem;
+    font-weight:600;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    z-index:50;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  #toast.show{ opacity:1; transform: translateX(-50%) translateY(0); }
+
+  /* ---------- Response overlay ---------- */
+  .overlay{
+    position:fixed;
+    inset:0;
+    background: rgba(20,10,50,0.6);
+    backdrop-filter: blur(3px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:20;
+    padding: 20px;
+  }
+  .response-card{
+    background: var(--paper);
+    border-radius: 24px;
+    padding: 36px 24px;
+    text-align:center;
+    max-width: 340px;
+    width:100%;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+    animation: popIn .4s cubic-bezier(.2,.9,.3,1.3);
+    position:relative;
+    overflow:hidden;
+  }
+  @keyframes popIn{
+    0%{ transform: scale(0.75) rotate(-3deg); opacity:0; }
+    100%{ transform: scale(1) rotate(0); opacity:1; }
+  }
+  .response-card .big-heart{ font-size:2.6rem; animation: popBounce .6s ease; }
+  @keyframes popBounce{
+    0%{ transform: scale(0); } 60%{ transform: scale(1.3);} 100%{ transform: scale(1); }
+  }
+  .response-card h3{
+    font-family:'Caveat', cursive;
+    background: linear-gradient(135deg, var(--violet), #a855f7);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    font-size: 2rem;
+    margin: 8px 0 2px;
+  }
+  .response-card .chosen{ font-weight:700; color: var(--deep); margin: 10px 0 4px; font-size:1.05rem; }
+  .response-card p.small{ font-size:0.85rem; color:#a89cc9; margin-top:10px; }
+  .close-btn{ margin-top:18px; background: var(--violet); color:white; padding: 11px 28px; }
+
+  /* confetti */
+  .confetti{
+    position:absolute;
+    width:8px; height:14px;
+    top:-20px;
+    opacity:0.9;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall{
+    0%{ transform: translateY(0) rotate(0deg); opacity:1; }
+    100%{ transform: translateY(340px) rotate(540deg); opacity:0; }
+  }
+</style>
+</head>
+<body>
+
+<div id="starField"></div>
+<div id="bgFloat"></div>
+<button id="fsBtn" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
+<button id="soundBtn" onclick="toggleSound()" title="Sound">🔊</button>
+
+<!-- ================= SETUP SCREEN ================= -->
+<div class="screen" id="setupScreen">
+  <div class="card">
+    <h1 class="title">Ek Pyaara Sa Message ✨</h1>
+    <p class="subtitle">Apna dil ki baat yaha likho</p>
+
+    <label for="herName">Uska naam kya hai? 🌸</label>
+    <input type="text" id="herName" placeholder="Jaise: Riya">
+
+    <label for="herMessage">Tumhe use kya bolna hai? 💭</label>
+    <textarea id="herMessage" placeholder="Yaha apna pyaara message likho..."></textarea>
+
+    <label for="optionInput">Uske liye options bana do 🎀</label>
+    <div class="option-row">
+      <input type="text" id="optionInput" placeholder="Jaise: Haan 💕">
+      <button class="btn-small" onclick="addOption()">+ Add</button>
+    </div>
+    <div class="options-list" id="optionsList"></div>
+
+    <button class="btn-main" onclick="createCard()">✨ Card Banao ✨</button>
+    <p class="hint">Kam se kam 1 option add karo (max 5)</p>
+  </div>
+</div>
+
+<!-- ================= CARD SCREEN ================= -->
+<div class="screen hidden" id="cardScreen">
+  <div class="card">
+    <div class="envelope-icon">💌</div>
+    <h2 class="her-name" id="displayName"></h2>
+    <div class="letter-box" id="letterBox"></div>
+
+    <div class="prompt-line" id="promptLine">Tum kya kahogi? 🥰</div>
+    <div class="options-wrap" id="optionsWrap"></div>
+
+    <div class="share-row" id="shareRow">
+      <p>Ab isko usko bhej do 👇</p>
+      <button class="btn-link" onclick="copyShareLink()">🔗 Shareable Link Copy Karo</button>
+      <button class="btn-share hidden" id="nativeShareBtn" onclick="nativeShare()">📤 Share Karo</button>
+      <button class="btn-share" id="notifyLinkBtn" onclick="openNotifyLink()">🔔 Reply Ka Notification Kholo</button>
+      <p class="hint">👆 Ye tab/page khula rakho — jaise hi wo koi option choose karegi, yahi pe turant popup dikh jayega (koi app install karne ki zaroorat nahi). Agar tab band ho jaye ya phone pe push notification bhi chahiye, toh upar wale 🔔 button se ntfy app me is link ko "subscribe" kar lo.</p>
+      <p class="hint" id="hostingHint"></p>
+    </div>
+
+    <button class="edit-link hidden" id="editLinkBtn" onclick="goToSetup()">⬅ Wapas Edit Karo</button>
+  </div>
+</div>
+
+<!-- ================= RESPONSE OVERLAY ================= -->
+<div class="overlay hidden" id="overlay">
+  <div class="response-card" id="responseCard">
+    <div class="big-heart">🎉✨</div>
+    <h3>Yayy!</h3>
+    <p id="responseName"></p>
+    <div class="chosen" id="responseChoice"></div>
+    <p class="small">✨ Thank you for being so sweet ✨</p>
+    <button class="close-btn" onclick="closeOverlay()">Close</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+  let options = [];
+  let herNameFinal = "";
+  let messageFinal = "";
+  let isViewerMode = false;   // true jab link se khola gaya ho
+  let notifyTopic = "";       // ntfy.sh channel jispe reply ka notification jayega
+  let soundOn = true;
+  let replyEventSource = null; // live listener jo creator ko turant reply dikhata hai (page khula hona chahiye)
+  const floatEmoji = ["✨","💜","⭐","🌙","🦋","💫","🌸"];
+  const confettiColors = ["#7c5cff","#a855f7","#ffb86b","#6be3c4","#ffffff"];
+
+  /* ---------------- Sound Effects (Web Audio API, cute chimes) ---------------- */
+  let audioCtx = null;
+  function ensureAudio(){
+    if(!soundOn) return null;
+    if(!audioCtx){
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  }
+  function playTone(freq, duration, type='sine', startGain=0.15, delay=0){
+    const ctx = ensureAudio();
+    if(!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+    gain.gain.setValueAtTime(startGain, ctx.currentTime + delay);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(ctx.currentTime + delay);
+    osc.stop(ctx.currentTime + delay + duration);
+  }
+  // halki si "twinkle" typing sound
+  function soundPop(){
+    playTone(1046, 0.07, 'sine', 0.09);
+    playTone(1318, 0.06, 'sine', 0.06, 0.025);
+  }
+  // soft button click
+  function soundClick(){
+    playTone(880, 0.05, 'sine', 0.07);
+    playTone(1174, 0.04, 'sine', 0.04, 0.02);
+  }
+  // swoosh jab card banta hai
+  function soundWhoosh(){
+    playTone(392, 0.22, 'sine', 0.08);
+    playTone(587, 0.2, 'sine', 0.07, 0.05);
+    playTone(880, 0.25, 'sine', 0.06, 0.1);
+  }
+  // pyaara si giggle-jaisi arpeggio jab option reveal ho
+  function soundGiggle(){
+    [659,784,988,1175].forEach((f,i)=> playTone(f, 0.14, 'triangle', 0.08, i*0.06));
+  }
+  // khushi wali chime jab response aaye
+  function soundChime(){
+    playTone(523.25, 0.3, 'sine', 0.13, 0);
+    playTone(659.25, 0.3, 'sine', 0.13, 0.12);
+    playTone(783.99, 0.3, 'sine', 0.13, 0.24);
+    playTone(1046.5, 0.5, 'sine', 0.15, 0.36);
+  }
+  // Extra cute effects
+  function soundHeart(){
+    playTone(523.25, 0.12, 'triangle', 0.08, 0);
+    playTone(659.25, 0.14, 'triangle', 0.07, 0.07);
+    playTone(783.99, 0.18, 'sine', 0.06, 0.14);
+  }
+
+  function soundSuccess(){
+    [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f,i)=>{
+      playTone(f, 0.16, 'sine', 0.07, i*0.055);
+    });
+  }
+  function toggleSound(){
+    soundOn = !soundOn;
+    document.getElementById('soundBtn').textContent = soundOn ? '🔊' : '🔇';
+    if(soundOn) soundClick();
+  }
+
+  /* ---------------- Toast ---------------- */
+  let toastTimer = null;
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
+  }
+
+  /* ---------------- Twinkling stars ---------------- */
+  function spawnStars(){
+    const field = document.getElementById('starField');
+    for(let i=0;i<60;i++){
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random()*2.5 + 1;
+      s.style.width = size+'px';
+      s.style.height = size+'px';
+      s.style.left = Math.random()*100+'vw';
+      s.style.top = Math.random()*100+'vh';
+      s.style.animationDuration = (1.5 + Math.random()*3)+'s';
+      s.style.animationDelay = (Math.random()*3)+'s';
+      field.appendChild(s);
+    }
+  }
+  spawnStars();
+
+  /* ---------------- Floating cute emojis ---------------- */
+  function spawnBgFloat(){
+    const container = document.getElementById('bgFloat');
+    for(let i=0; i<16; i++){
+      const h = document.createElement('div');
+      h.className = 'bg-float';
+      h.textContent = floatEmoji[Math.floor(Math.random()*floatEmoji.length)];
+      h.style.left = Math.random()*100 + 'vw';
+      h.style.animationDuration = (7 + Math.random()*9) + 's';
+      h.style.animationDelay = (Math.random()*10) + 's';
+      h.style.fontSize = (14 + Math.random()*16) + 'px';
+      container.appendChild(h);
+    }
+  }
+  spawnBgFloat();
+
+  /* ---------------- Fullscreen ---------------- */
+  function toggleFullscreen(){
+    soundClick();
+    if(!document.fullscreenElement){
+      document.documentElement.requestFullscreen?.().catch(()=>{});
+    } else {
+      document.exitFullscreen?.();
+    }
+  }
+
+  /* ---------------- Setup logic ---------------- */
+  function addOption(){
+    const input = document.getElementById('optionInput');
+    const val = input.value.trim();
+
+    if(!val){
+      showToast("🎀 Pehle option likho!");
+      soundClick();
+      input.focus();
+      return;
+    }
+
+    if(options.length >= 5){
+      showToast("😄 Max 5 options rakh sakte ho!");
+      soundClick();
+      return;
+    }
+
+    options.push(val);
+    input.value = "";
+    renderOptions();
+    soundPop();
+    input.focus();
+  }
+
+  function removeOption(i){ options.splice(i,1); soundClick(); renderOptions(); }
+  function renderOptions(){
+    const list = document.getElementById('optionsList');
+    list.innerHTML = "";
+    options.forEach((opt, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'option-chip';
+      chip.innerHTML = `<span>🎀 ${opt}</span>`;
+      const btn = document.createElement('button');
+      btn.textContent = "✕";
+      btn.onclick = () => removeOption(i);
+      chip.appendChild(btn);
+      list.appendChild(chip);
+    });
+  }
+  document.getElementById('optionInput').addEventListener('keypress', function(e){
+    if(e.key === 'Enter'){ addOption(); }
+  });
+
+  function createCard(){
+    const name = document.getElementById('herName').value.trim();
+    const msg = document.getElementById('herMessage').value.trim();
+    if(!name){ alert("Uska naam toh daalo pehle 🥺"); return; }
+    if(!msg){ alert("Message toh likho kuch pyaara sa 💌"); return; }
+    if(options.length === 0){ alert("Kam se kam ek option toh add karo 🎀"); return; }
+
+    herNameFinal = name;
+    messageFinal = msg;
+    isViewerMode = false;
+    notifyTopic = generateTopic();
+    console.log('[createCard] new card created. isViewerMode =', isViewerMode, '| notifyTopic =', notifyTopic);
+    soundWhoosh();
+    setTimeout(soundHeart, 180);
+
+    openCardScreen();
+  }
+
+  function openCardScreen(){
+    document.getElementById('setupScreen').classList.add('hidden');
+    document.getElementById('cardScreen').classList.remove('hidden');
+    document.getElementById('displayName').textContent = `Hey ${herNameFinal} 💕`;
+
+    const letterBox = document.getElementById('letterBox');
+    letterBox.innerHTML = '';
+    document.getElementById('promptLine').classList.remove('show');
+    document.getElementById('optionsWrap').innerHTML = "";
+    document.getElementById('shareRow').classList.remove('show');
+
+    document.getElementById('editLinkBtn').classList.toggle('hidden', isViewerMode);
+
+    console.log('[openCardScreen] isViewerMode =', isViewerMode, '| notifyTopic =', notifyTopic || '(empty)');
+
+    // Creator ke liye: page khula rehte hi live sunte raho ki reply aaya ya nahi
+    if(!isViewerMode){
+      listenForReply(notifyTopic);
+    } else {
+      stopListeningForReply();
+      console.log('[openCardScreen] viewer mode — is page will call notifyChoice() when an option is clicked.');
+    }
+
+    typeMessageWordByWord(messageFinal);
+  }
+
+  function typeMessageWordByWord(message){
+    const letterBox = document.getElementById('letterBox');
+    const words = message.split(" ");
+    let idx = 0;
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    letterBox.appendChild(cursor);
+
+    function step(){
+      if(idx < words.length){
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'word-fade';
+        wordSpan.textContent = words[idx] + (idx < words.length - 1 ? '\u00A0' : '');
+        letterBox.insertBefore(wordSpan, cursor);
+        if(idx % 2 === 0) soundPop();
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => { wordSpan.classList.add('visible'); });
+        });
+
+        idx++;
+        setTimeout(step, 260);
+      } else {
+        cursor.remove();
+        revealOptions();
+      }
+    }
+    step();
+  }
+
+  function revealOptions(){
+    setTimeout(() => {
+      document.getElementById('promptLine').classList.add('show');
+      soundGiggle();
+      const wrap = document.getElementById('optionsWrap');
+      wrap.innerHTML = "";
+      options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.textContent = opt;
+        btn.style.opacity = '0';
+        btn.style.transform = 'translateY(10px)';
+        btn.style.transition = 'opacity .4s ease, transform .4s ease';
+        btn.onclick = () => { soundHeart(); showResponse(opt); };
+        wrap.appendChild(btn);
+        setTimeout(() => {
+          btn.style.opacity = '1';
+          btn.style.transform = 'translateY(0)';
+          soundPop();
+        }, 130 * (i + 1));
+      });
+
+      // Sirf creator (setup se aane wala) ko hi share options dikhao
+      if(!isViewerMode){
+        setTimeout(() => {
+          document.getElementById('shareRow').classList.add('show');
+        }, 130 * (options.length + 1) + 200);
+      }
+    }, 400);
+  }
+
+  function spawnConfetti(){
+    const card = document.getElementById('responseCard');
+    for(let i=0;i<24;i++){
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random()*100 + '%';
+      c.style.background = confettiColors[Math.floor(Math.random()*confettiColors.length)];
+      c.style.animationDuration = (1 + Math.random()*0.8) + 's';
+      c.style.animationDelay = (Math.random()*0.3) + 's';
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      card.appendChild(c);
+      setTimeout(() => c.remove(), 2200);
+    }
+  }
+
+  function showResponse(choice){
+    document.getElementById('responseName').textContent = `${herNameFinal} ne choose kiya:`;
+    document.getElementById('responseChoice').textContent = `"${choice}"`;
+    document.getElementById('overlay').classList.remove('hidden');
+    soundChime();
+    setTimeout(soundSuccess, 220);
+    spawnConfetti();
+
+    console.log('[showResponse] option clicked =', choice, '| isViewerMode =', isViewerMode, '| notifyTopic =', notifyTopic || '(empty)');
+    if(isViewerMode){
+      // Recipient's page: this MUST fire so the creator's page gets the live update.
+      notifyChoice(choice);
+    } else {
+      // Creator viewing/testing their own card — nothing to notify, this is expected.
+      console.log('[showResponse] isViewerMode is false, so notifyChoice is NOT called (this is the creator\'s own page, not a shared link).');
+    }
+  }
+  function closeOverlay(){ soundClick(); document.getElementById('overlay').classList.add('hidden'); }
+  function goToSetup(){
+    soundClick();
+    stopListeningForReply();
+    document.getElementById('cardScreen').classList.add('hidden');
+    document.getElementById('setupScreen').classList.remove('hidden');
+  }
+
+  /* ---------------- Reply notification (ntfy.sh, no backend needed) ---------------- */
+  function generateTopic(){
+    // random + time-based, taaki koi doosra isi topic ko guess na kar sake
+    return 'pyaara-msg-' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+  }
+  // Receiver ke option select karte hi ye chalega: choice ko ntfy topic par publish karo.
+  //
+  // ROOT CAUSE OF THE ORIGINAL BUG:
+  // The old code sent a custom `Title` HTTP header on the fetch() call. A custom header on a
+  // cross-origin POST forces the browser to send a CORS "preflight" OPTIONS request first.
+  // If that preflight is blocked or rejected for any reason (browser extension, network
+  // policy, etc.), the browser NEVER sends the real POST — nothing shows in the Network tab,
+  // and the old `.catch(()=>{})` silently swallowed the resulting fetch() rejection, so there
+  // was no error anywhere to notice. Fix: don't send any custom headers. Plain-text POST
+  // bodies use `Content-Type: text/plain`, which is CORS-safelisted, so the request becomes
+  // a "simple request" and skips the preflight step entirely — it always actually gets sent.
+  // The notification title is passed as a URL query parameter instead (query params never
+  // trigger a preflight).
+  async function notifyChoice(choice){
+    console.log('[notifyChoice] called with choice =', choice);
+
+    if(!notifyTopic){
+      console.error(
+        '[notifyChoice] notifyTopic is EMPTY — cannot send, so no request will be sent. ' +
+        'This means the shared link this page was opened from did not contain a "t" (topic) ' +
+        'field — either it is an old link made before this feature existed, or decodeData() ' +
+        'could not read data.t from the URL. Current URL was:', window.location.href
+      );
+      return;
+    }
+
+    const title = `${herNameFinal} ne reply diya! 💌`;
+    const url = `https://ntfy.sh/${notifyTopic}?title=${encodeURIComponent(title)}`;
+    console.log('[notifyChoice] sending notification to', url, '| body =', choice);
+
+    try{
+      const response = await fetch(url, {
+        method: 'POST',
+        body: choice
+      });
+
+      if(response.ok){
+        console.log('[notifyChoice] notification sent successfully. HTTP status:', response.status);
+      } else {
+        let bodyText = '';
+        try{ bodyText = await response.text(); }catch(readErr){ bodyText = '(could not read response body)'; }
+        console.error('[notifyChoice] notification failed. HTTP status:', response.status, response.statusText, '| Response body:', bodyText);
+      }
+    }catch(err){
+      console.error('[notifyChoice] notification failed — fetch() threw an error.', '\nName:', err.name, '\nMessage:', err.message, '\nFull error:', err);
+    }
+  }
+
+  /* ---------------- Creator ke liye LIVE reply popup (isi page ke andar) ----------------
+     Jaise hi creator card banata hai, ye SSE (Server-Sent Events) se ntfy.sh ke topic ko
+     "sun" na shuru kar deta hai. Jab dusra banda option select karega, notifyChoice() us
+     topic par choice publish karega, aur ye listener turant usi second ye page pe confetti
+     + popup dikha dega — bina koi app install kiye. Bas creator ka tab khula rehna chahiye.
+     Duplicate events ignore hote hain, aur connection tootne par khud reconnect ho jata hai. */
+  let seenReplyIds = new Set();
+  let sseReconnectTimer = null;
+  let sseReconnectDelay = 2000; // ms, disconnect hone par badhta jaata hai (max 15s)
+
+  function listenForReply(topic){
+    stopListeningForReply();
+    if(!topic || typeof EventSource === 'undefined') return;
+    seenReplyIds = new Set();
+    sseReconnectDelay = 2000;
+    console.log('[SSE] listening for replies on topic:', topic);
+    connectReplyStream(topic);
+  }
+
+  function connectReplyStream(topic){
+    try{
+      replyEventSource = new EventSource(`https://ntfy.sh/${topic}/sse`);
+
+      replyEventSource.onopen = function(){
+        sseReconnectDelay = 2000; // connection theek hone par delay reset
+        console.log('[SSE] connected to https://ntfy.sh/' + topic + '/sse');
+      };
+
+      replyEventSource.onmessage = function(e){
+        console.log('[SSE] raw event received:', e.data);
+        try{
+          const data = JSON.parse(e.data);
+          if(data.event !== 'message' || !data.message){
+            console.log('[SSE] ignoring non-message event:', data.event);
+            return;
+          }
+
+          // Duplicate messages ignore karo (ntfy kabhi kabhi replay/retry karta hai)
+          const msgId = data.id || `${data.time}-${data.message}`;
+          if(seenReplyIds.has(msgId)){
+            console.log('[SSE] duplicate message ignored, id =', msgId);
+            return;
+          }
+          seenReplyIds.add(msgId);
+
+          // notifyChoice() ab exactly choice ko hi body me bhejta hai, isliye data.message
+          // hi published choice ke bilkul barabar hota hai — koi extra parsing nahi chahiye.
+          const choice = data.message;
+          const receivedAt = data.time ? new Date(data.time * 1000) : new Date();
+          console.log('[SSE] new reply received: choice =', choice, '| id =', msgId);
+          showCreatorReply(choice, receivedAt);
+        }catch(err){
+          console.error('[SSE] failed to parse event data:', err.name, '-', err.message, '| raw data:', e.data);
+        }
+      };
+
+      replyEventSource.onerror = function(err){
+        // Connection tooti — band karo aur thodi der baad khud reconnect karo
+        console.warn('[SSE] connection error/dropped, will reconnect in', sseReconnectDelay, 'ms. readyState =', replyEventSource ? replyEventSource.readyState : 'null');
+        if(replyEventSource){ replyEventSource.close(); }
+        replyEventSource = null;
+        clearTimeout(sseReconnectTimer);
+        sseReconnectTimer = setTimeout(() => connectReplyStream(topic), sseReconnectDelay);
+        sseReconnectDelay = Math.min(sseReconnectDelay * 1.5, 15000);
+      };
+    }catch(err){
+      console.error('[SSE] listener could not be started:', err.name, '-', err.message, err);
+    }
+  }
+
+  function stopListeningForReply(){
+    clearTimeout(sseReconnectTimer);
+    sseReconnectTimer = null;
+    if(replyEventSource){
+      console.log('[SSE] closing EventSource connection.');
+      replyEventSource.close();
+      replyEventSource = null;
+    }
+  }
+
+  function showCreatorReply(choice, receivedAt){
+    const timeStr = (receivedAt instanceof Date ? receivedAt : new Date())
+      .toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    document.getElementById('responseName').textContent = `${herNameFinal} ne choose kiya (${timeStr}):`;
+    document.getElementById('responseChoice').textContent = `"${choice}"`;
+    document.getElementById('overlay').classList.remove('hidden');
+    soundChime();
+    setTimeout(soundSuccess, 220);
+    spawnConfetti();
+  }
+
+  // Page chhodte waqt (tab close/refresh/navigate) EventSource band kar do
+  window.addEventListener('beforeunload', stopListeningForReply);
+  window.addEventListener('pagehide', stopListeningForReply);
+
+  /* ---------------- Share link: encode/decode data in URL ---------------- */
+  function encodeData(obj){
+    const json = JSON.stringify(obj);
+    let b64 = btoa(unescape(encodeURIComponent(json)));
+    return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+  function decodeData(str){
+    str = str.replace(/-/g, '+').replace(/_/g, '/');
+    while(str.length % 4) str += '=';
+    const json = decodeURIComponent(escape(atob(str)));
+    return JSON.parse(json);
+  }
+  function buildShareLink(){
+    const data = { n: herNameFinal, m: messageFinal, o: options, t: notifyTopic };
+    const encoded = encodeData(data);
+    const base = window.location.href.split(/[?#]/)[0];
+
+    // Use ?d= instead of #d=. This works reliably on normal hosting
+    // and avoids preview/sandbox hosts swallowing the URL fragment.
+    const link = `${base}?d=${encoded}`;
+    console.log('[buildShareLink] embedded topic in link:', data.t || '(empty!)', '| full link:', link);
+    return link;
+  }
+  async function copyShareLink(){
+    const link = buildShareLink();
+
+    // A local file cannot create a public internet link by itself.
+    if(location.protocol === 'file:'){
+      const msg = "⚠️ Abhi ye local file hai. Pehle HTML ko online host karo, phir Share Link kisi ko bhi chalega.";
+      showToast(msg);
+      soundClick();
+      return;
+    }
+
+    try{
+      await navigator.clipboard.writeText(link);
+      showToast("✨ Cute link copy ho gaya!");
+      soundSuccess();
+    }catch(e){
+      const tmp = document.createElement('input');
+      tmp.value = link;
+      document.body.appendChild(tmp);
+      tmp.select();
+      document.execCommand('copy');
+      document.body.removeChild(tmp);
+      showToast("✨ Link copy ho gaya!");
+      soundSuccess();
+    }
+  }
+  function openNotifyLink(){
+    soundClick();
+    window.open(`https://ntfy.sh/${notifyTopic}`, '_blank');
+  }
+  async function nativeShare(){
+    if(location.protocol === 'file:'){
+      showToast("⚠️ Pehle is HTML ko online host karo.");
+      return;
+    }
+    const link = buildShareLink();
+    try{
+      await navigator.share({ title: `${herNameFinal} ke liye ek message 💌`, url: link });
+      soundSuccess();
+    }catch(e){ /* user cancelled, koi baat nahi */ }
+  }
+
+  /* ---------------- Page load: check if opened via a shared link ---------------- */
+  function tryLoadFromHash(){
+    console.log('[tryLoadFromHash] current URL:', window.location.href);
+    const params = new URLSearchParams(window.location.search);
+    const encoded = params.get('d');
+
+    if(!encoded){
+      console.log('[tryLoadFromHash] no "?d=" param found in URL — this is the setup/creator screen, isViewerMode stays false.');
+      return false;
+    }
+
+    try{
+      const data = decodeData(encoded);
+      console.log('[tryLoadFromHash] decoded link data:', data);
+      if(data && data.n && data.m && Array.isArray(data.o) && data.o.length){
+        herNameFinal = data.n;
+        messageFinal = data.m;
+        options = data.o;
+        notifyTopic = data.t || "";
+        isViewerMode = true;
+        console.log('[tryLoadFromHash] isViewerMode set to true | notifyTopic =', notifyTopic || '(EMPTY — this link has no topic, so notifyChoice will not be able to send anything!)');
+        openCardScreen();
+        return true;
+      } else {
+        console.error('[tryLoadFromHash] decoded data is missing required fields (n/m/o):', data);
+      }
+    }catch(e){
+      console.error('[tryLoadFromHash] failed to decode link data:', e.name, '-', e.message, e);
+      document.getElementById('setupScreen').classList.remove('hidden');
+      document.getElementById('cardScreen').classList.add('hidden');
+    }
+    return false;
+  }
+  if(!tryLoadFromHash()){
+    document.getElementById('nativeShareBtn').classList.toggle('hidden', !navigator.share);
+    document.getElementById('setupScreen').classList.remove('hidden');
+    document.getElementById('cardScreen').classList.add('hidden');
+  } else {
+    document.getElementById('nativeShareBtn')?.classList.add('hidden');
+  }
+
+  if(location.protocol === 'file:'){
+    document.getElementById('hostingHint').textContent =
+      "💡 Ye abhi PC ki local file hai. Isko online host karne ke baad Link Copy Karo dabao — tab link kisi bhi phone par khulega.";
+  }
+</script>
+
+</body>
+</html>
